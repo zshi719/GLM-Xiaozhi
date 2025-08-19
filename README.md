@@ -1,5 +1,5 @@
 # GLM-Xiaozhi: 
-## GLM小智：小智ESP32语音助手 - 智谱BigModel集成版  
+**GLM小智：小智ESP32语音助手 - 智谱BigModel集成版**  
 
 🙏 Credit to 虾哥 for the original xiaozhi-esp32 open source project  
 Original Projects: 
