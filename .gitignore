@@ -18,7 +18,7 @@ models/
 
 # Jupyter Notebooks
 .ipynb_checkpoints
-
+models/model.pt
 # VS Code
 .vscode/
 
@@ -50,5 +50,4 @@ node_modules/
 
 # Git
 .git
-.gitignore
 
