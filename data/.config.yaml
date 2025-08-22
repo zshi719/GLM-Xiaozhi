@@ -1,0 +1,290 @@
+server:
+  ip: 0.0.0.0
+  port: 8000
+  http_port: 8003
+  websocket: ws://101.37.205.115:8000/xiaozhi/v1/
+  # OTA: http://101.37.205.115:8003/xiaozhi/ota/
+  vision_explain: http://101.37.205.115:8003/mcp/vision/explain
+  timezone_offset: +8
+  auth:
+    enabled: false
+
+# 管理API配置
+manager_api:
+  enable: false
+
+log:
+  # 设置控制台输出的日志格式，时间、日志级别、标签、消息
+  log_format: "<green>{time:YYMMDD HH:mm:ss}</green>[<light-blue>{extra[tag]}</light-blue>]-<level>{level}</level>-<light-green>{message}</light-green>"
+  # 设置日志文件输出的格式，时间、日志级别、标签、消息
+  log_format_file: "{time:YYYY-MM-DD HH:mm:ss} - {version}_{selected_module} - {name} - {level} - {extra[tag]} - {message}"
+  # 设置日志等级：INFO、DEBUG
+  log_level: DEBUG
+
+# 基础配置
+delete_audio: true
+close_connection_no_voice_time: 120
+tts_timeout: 10
+enable_wakeup_words_response_cache: true
+enable_greeting: true
+enable_stop_tts_notify: false
+stop_tts_notify_voice: "config/assets/tts_notify.mp3"
+
+exit_commands:
+  - "退出"
+  - "关闭"
+
+# 唤醒词
+wakeup_words:
+  - "你好小智"
+  - "嘿你好呀"
+  - "你好小志"
+  - "小爱同学"
+  - "你好小鑫"
+  - "你好小新"
+  - "小美同学"
+  - "小龙小龙"
+  - "嘿嘿"
+  - "小平老师"
+  - "小平小平"
+  - "你好吗"
+  - "凝瑞"
+
+
+
+# ============================== 模块选择配置 ==============================
+selected_module:
+  # 语音活动检测
+  VAD: SileroVAD
+  ASR: SherpaASR
+  LLM: GLM-45
+  VLLM: GLM-45V
+  TTS: EdgeTTS
+  Memory: mem_local_short
+  Intent: function_call
+
+
+
+# 大语言模型配置
+LLM:
+  ChatGLMLLM:
+    type: openai
+    model_name: glm-4-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: fe7d122199e748558f558ecaf22cc315.jHFIpJiNT0zJlY3A
+
+  GLM-45:
+    type: openai
+    model_name: glm-4.5 
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  GLM-4.5-Flash:
+    type: openai
+    model_name: glm-4.5-flash 
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  GLM-4.5-Air:
+    type: openai
+    model_name: glm-4.5-air
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  GLM-4.5-X:
+    type: openai
+    model_name: glm-4.5-x
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  GLM-4.5-AirX:
+    type: openai
+    model_name: glm-4.5-airx
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  # GLM-Z1 推理
+  GLM-Z1:
+    type: openai
+    model_name: glm-z1
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+
+  GLM-Air:
+    type: openai
+    model_name: glm-4.5-air
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  GLM-X:
+    type: openai
+    model_name: glm-4.5-x
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+
+VLLM:
+  ChatGLMVLLM:
+    type: openai
+    model_name: glm-4v-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  GLM-45V:
+    type: openai
+    model_name: glm-4.5v
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+  
+  GLM-4.1V-Thinking:
+    type: openai
+    model_name: glm-4.1v-thinking-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+
+
+
+TTS:
+  EdgeTTS:
+    type: edge
+    voice: zh-CN-XiaoxiaoNeural
+    output_dir: tmp/
+  
+
+
+mcp_endpoint: ws://8.141.113.229/mcp/ws/?token=0TirUgUVHWMq1uQ_DrTOqP3x0wSGm5Mi1eWFHpkwCk49fau77q-1A8OwpuEb14EUwF5LgNEd3Vc0paKD7U7aQg.Lfvu5sPKUkdqeOMG-_-_y5AzQmhv5mMYv-8Pdn7-txY
+
+# AutoGLM MCP配置
+autoglm:
+  enabled: true
+  base_url: "http://8.141.113.229/mcp/http"
+  api_key: "0TirUgUVHWMq1uQ_DrTOqP3x0wSGm5Mi1eWFHpkwCk49fau77q-1A8OwpuEb14EUwF5LgNEd3Vc0paKD7U7aQg.Lfvu5sPKUkdqeOMG-_-_y5AzQmhv5mMYv-8Pdn7-txY"
+  name: autoglm_agent
+  description: AutoGLM Mobile Automation Agent
+
+
+# ============================== VAD配置 ==============================
+VAD:
+  SileroVAD:
+    type: silero
+    threshold: 0.5
+    threshold_low: 0.3
+    model_dir: models/snakers4_silero-vad
+    min_silence_duration_ms: 200
+
+# ============================== ASR配置 ==============================
+
+# ASR配置
+ASR:
+  FunASR:
+    type: fun_local
+    model_dir: models/SenseVoiceSmall
+    output_dir: tmp/
+
+ASR:
+  ZhipuASR:
+    type: zhipu_asr
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+    model: "glm-asr"
+    url: "https://open.bigmodel.cn/api/paas/v4/"
+    language: "zh"
+    output_dir: tmp/
+
+# ============================== TTS配置 ==============================
+TTS:
+  # 免费EdgeTTS
+  EdgeTTS:
+    type: edge
+    voice: zh-CN-YunxiNeural
+    output_dir: tmp/
+
+  ZhipuTTS:
+    type: openai
+    api_key: fe7d122199e748558f558ecaf22cc315.jHFIpJiNT0zJlY3A
+    model: "cogtts"
+    voice: "tongtong" 
+    url: "https://open.bigmodel.cn/api/paas/v4/"
+    response_format: "wav"
+    output_dir: tmp/
+
+
+  # GLM-4 Voice 智谱语音模型
+  GLM4Voice:
+    type: openai
+    model_name: glm-4-voice
+    url: https://open.bigmodel.cn/api/paas/v4/chat/completions
+    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+    voice_config:
+      format: "wav"
+      language: "zh"
+    output_dir: tmp/
+
+  # Custom: https://docs.bigmodel.cn/api-reference/%E6%A8%A1%E5%9E%8B-api/%E6%96%87%E6%9C%AC%E8%BD%AC%E8%AF%AD%E9%9F%B3
+  CustomTTS:
+    type: custom
+    method: POST
+    url: "https://open.bigmodel.cn/api/paas/v4/audio/speech"
+    headers:
+      Authorization: "Bearer 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK"
+      Content-Type: "application/json"
+    params:
+      model: "cogtts"
+      input: "{prompt_text}"
+      voice: "tongtong"
+      response_format: "wav"
+    output_dir: tmp/
+
+  AliyunTTS:
+    type: aliyun
+    output_dir: tmp/
+    appkey: qD6vDdFGMDhENfaa
+    token: 414b8d6b76b443c28294c844e15f9d33
+    access_key_id: 你的阿里云账号access_key_id
+    access_key_secret: 你的阿里云账号access_key_secret
+
+# ============================== 记忆配置 ==============================
+Memory:
+  mem_local_short:
+    type: mem_local_short
+    llm: GLM-4.5-Air
+
+# ============================== 意图识别配置 ==============================
+Intent:
+  nointent:
+    type: nointent
+
+  intent_llm:
+    type: intent_llm
+    llm: GLM-4.5-X
+    functions:
+      - get_weather
+      - get_news_from_newsnow
+      - play_music
+
+  # 函数调用意图识别
+  function_call:
+    type: function_call
+    functions:
+      - change_role
+      - get_weather
+      - get_news_from_newsnow
+      - play_music
+      - autoglm_control
+      - give_talk
+
+# ============================== 插件配置 ==============================
+plugins:
+  # 天气查询插件
+  get_weather: 
+    api_host: "mj7p3y7naa.re.qweatherapi.com"
+    api_key: "a861d0d5e7bf4ee1a83d9a9e4f96d4da"
+    default_location: "北京"
+
+  # 新闻查询插件
+  get_news_from_chinanews:
+    default_rss_url: "https://www.chinanews.com.cn/rss/society.xml"
+
+  get_news_from_newsnow:
+    default_rss_url: "https://www.newsnow.co.uk/"
