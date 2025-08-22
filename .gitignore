@@ -1,1 +1,53 @@
-config.yaml
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.env
+.env*
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data and models
+data/*.yaml
+models/*.pt
+models/*/
+lecture/*.wav
+music/*.mp3
+
+# Temporary files
+tmp/
+*.tmp
+
+# Images
+*.png
+
+# Node.js
+node_modules/
+
+# Misc
+*.bak
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+

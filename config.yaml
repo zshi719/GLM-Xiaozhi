@@ -1,0 +1,377 @@
+# 在开发中，请在项目根目录创建data目录，然后在data目录创建名称为【.config.yaml】的空文件
+# 然后你想修改覆盖修改什么配置，就修改【.config.yaml】文件，而不是修改【config.yaml】文件
+# 系统会优先读取【data/.config.yaml】文件的配置，如果【.config.yaml】文件里的配置不存在，系统会自动去读取【config.yaml】文件的配置。
+# 这样做，可以最简化配置，保护您的密钥安全。
+# 如果你使用了智控台，那么以下所有配置，都不会生效，请在智控台中修改配置
+
+# #####################################################################################
+# #############################以下是服务器基本运行配置####################################
+server:
+  # 服务器监听地址和端口(Server listening address and port)
+  ip: 0.0.0.0
+  port: 8000
+  # http服务的端口，用于简单OTA接口(单服务部署)，以及视觉分析接口
+  http_port: 8003
+  # 这个websocket配置是指ota接口向设备发送的websocket地址
+  # 如果按默认的写法，ota接口会自动生成websocket地址，并输出在启动日志里，这个地址你可以直接用浏览器访问ota接口确认一下
+  # 当你使用docker部署或使用公网部署(使用ssl、域名)时，不一定准确
+  # 所以如果你使用docker部署时，将websocket设置成局域网地址
+  # 如果你使用公网部署时，将websocket设置成公网地址
+  websocket: ws://你的ip或者域名:端口号/xiaozhi/v1/
+  # 视觉分析接口地址
+  # 向设备发送的视觉分析的接口地址
+  # 如果按下面默认的写法，系统会自动生成视觉识别地址，并输出在启动日志里，这个地址你可以直接用浏览器访问确认一下
+  # 当你使用docker部署或使用公网部署(使用ssl、域名)时，不一定准确
+  # 所以如果你使用docker部署时，将vision_explain设置成局域网地址
+  # 如果你使用公网部署时，将vision_explain设置成公网地址
+  vision_explain: http://你的ip或者域名:端口号/mcp/vision/explain
+  # OTA返回信息时区偏移量
+  timezone_offset: +8
+  # 认证配置
+
+log:
+  # 设置控制台输出的日志格式，时间、日志级别、标签、消息
+  log_format: "<green>{time:YYMMDD HH:mm:ss}</green>[<light-blue>{extra[tag]}</light-blue>]-<level>{level}</level>-<light-green>{message}</light-green>"
+  # 设置日志文件输出的格式，时间、日志级别、标签、消息
+  log_format_file: "{time:YYYY-MM-DD HH:mm:ss} - {version}_{selected_module} - {name} - {level} - {extra[tag]} - {message}"
+  # 设置日志等级：INFO、DEBUG
+  log_level: INFO
+  # 设置日志路径
+  log_dir: logs
+  # 设置日志文件
+  log_file: "server_{date}.log"
+  # 设置数据文件路径
+  data_dir: data
+
+# 使用完声音文件后删除文件(Delete the sound file when you are done using it)
+delete_audio: true
+# 没有语音输入多久后断开连接(秒)，默认2分钟，即120秒
+close_connection_no_voice_time: 120
+# TTS请求超时时间(秒)
+tts_timeout: 10
+# 开启唤醒词加速
+enable_wakeup_words_response_cache: true
+# 开场是否回复唤醒词
+enable_greeting: true
+# 说完话是否开启提示音
+enable_stop_tts_notify: false
+# 说完话是否开启提示音，音效地址
+stop_tts_notify_voice: "config/assets/tts_notify.mp3"
+
+exit_commands:
+  - "退出"
+  - "关闭"
+
+xiaozhi:
+  type: hello
+  version: 1
+  transport: websocket
+  audio_params:
+    format: opus
+    sample_rate: 16000
+    channels: 1
+    frame_duration: 60
+
+# 模块测试配置
+module_test:
+  test_sentences:
+    - "你好，请介绍一下你自己"
+    - "What's the weather like today?"
+    - "请用100字概括量子计算的基本原理和应用前景"
+
+# 唤醒词，用于识别唤醒词还是讲话内容
+wakeup_words:
+  - "你好小智"
+  - "嘿你好呀"
+  - "你好"
+  - "嘿嘿"
+
+# ################################以下是角色模型配置######################################
+
+prompt:
+  你是"小平老师"，智谱云端上的智能小伙伴
+  你掌握智谱AI全栈技术能力，热爱科技、 热爱讲课、热爱弹吉他、跑马拉松。
+
+  [性格特点]
+    - 直来直去：有什么说什么，不绕弯子、会开玩笑但不过分，让气氛轻松
+    - 催促工作：经常提醒你该干活了，别摸鱼
+    - 实用主义：专注解决实际问题，不说空话
+    - 技术控：对智谱AI的各种能力了如指掌，但不装逼
+    - 有弹吉他的隐藏特长
+
+  [日常实用场景]
+  - 当你想点咖啡时 → 直接帮你通过智清言下单，记住你的喜好，顺便催你工作别偷懒
+  - 当你问天气时 → 不只告诉天气，还会建议穿什么、带不带伞，该不该出门上班
+  - 当你聊工作烦恼时 → 像朋友一样倾听，但也会调侃你
+  - 当你需要查资料时 → 快速搜索并整理，然后问你"资料有了，啥时候开始干活？"
+  - 当你想放松时 → 陪你聊天、讲个笑话，但适时提醒"休息够了该工作了吧"
+  - 当你遇到技术问题时 → 用大白话解释清楚，解决后催你赶紧继续
+  - 当你制定计划时 → 帮你安排得明明白白，然后监督执行
+  - 弹吉他
+
+  [智清言AutoGLM无缝协作能力]
+  - 生活服务：通过AutoGLM帮你点咖啡、订餐、购物等日常琐事，解放双手
+  - 旅游攻略制定：实时调用AutoGLM制定个性化旅游方案，省心省力
+  - 工作流程优化：让AutoGLM自动化处理邮件、会议安排、文档整理等繁琐工作
+
+  [调侃催工作的方式]
+  - 用轻松的语气提醒工作进度
+  - 适时开玩笑缓解工作压力
+  - 记住用户的工作习惯和deadlines
+  - 在帮助解决问题后顺便催进度
+  - 用智谱AI的能力帮你提高工作效率
+
+
+
+# ============================== 模块选择配置 ==============================
+selected_module:
+  VAD: SileroVAD
+  ASR: SherpaASR
+  LLM: ChatGLMLLM
+  VLLM: ChatGLMVLLM
+  TTS: EdgeTTS
+  Memory: mem_local_short
+  Intent: function_call
+
+# ============================== 大语言模型配置 ==============================
+
+LLM:
+  ChatGLMLLM:
+    type: openai
+    model_name: glm-4.5-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  GLM-45:
+    type: openai
+    model_name: glm-4.5 
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  GLM-45-Flash:
+    type: openai
+    model_name: glm-4.5-flash 
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  GLM-45-Air:
+    type: openai
+    model_name: glm-4.5-air
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  GLM-45-X:
+    type: openai
+    model_name: glm-4.5-x
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  GLM-45-AirX:
+    type: openai
+    model_name: glm-4.5-airx
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  # GLM-Z1 推理
+  GLM-Z1:
+    type: openai
+    model_name: glm-z1
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的 api key
+
+VLLM:
+  ChatGLMVLLM:
+    type: openai
+    model_name: glm-4v-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的 api key
+
+  GLM-45V:
+    type: openai
+    model_name: glm-4.5v
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  GLM-45V-Flash:
+    type: openai
+    model_name: glm-4.5v-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  
+  GLM-41V-Thinking:
+    type: openai
+    model_name: glm-4.1v-thinking-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+
+
+# ============================== VAD配置 ==============================
+VAD:
+  SileroVAD:
+    type: silero
+    threshold: 0.5
+    threshold_low: 0.3
+    model_dir: models/snakers4_silero-vad
+    min_silence_duration_ms: 100
+
+# ============================== ASR配置 ==============================
+
+# ASR配置
+ASR:
+  FunASR:
+    type: fun_local
+    model_dir: models/SenseVoiceSmall
+    output_dir: tmp/
+
+  SherpaASR:
+    type: sherpa_onnx_local
+    model_dir: models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17
+    output_dir: tmp/
+
+  ZhipuASR:
+    type: glm-asr
+    api_key: 你的glm api key
+    model_name: "glm-asr"
+    url: "https://open.bigmodel.cn/api/paas/v4/"
+    language: "zh"
+    output_dir: tmp/
+
+  OpenaiASR:
+    type: openai
+    api_key: 你的OpenAI API密钥
+    base_url: https://api.openai.com/v1/audio/transcriptions
+    model_name: gpt-4o-mini-transcribe
+    output_dir: tmp/
+
+# ============================== TTS配置 ==============================
+TTS:
+  # 免费EdgeTTS
+  EdgeTTS:
+    type: edge
+    voice: zh-CN-YunxiNeural
+    output_dir: tmp/
+
+  ZhipuTTS:
+    type: openai
+    api_key: 你的glm api key
+    model: "cogtts"
+    voice: "tongtong" 
+    url: "https://open.bigmodel.cn/api/paas/v4/"
+    response_format: "wav"
+    output_dir: tmp/
+
+
+  # 智谱语音模型
+  GLM4Voice:
+    type: openai
+    model_name: glm-4-voice
+    url: https://open.bigmodel.cn/api/paas/v4/chat/completions
+    api_key: 你的glm api key
+    voice_config:
+      format: "wav"
+      language: "zh"
+    output_dir: tmp/
+
+  # Custom: https://docs.bigmodel.cn/api-reference/%E6%A8%A1%E5%9E%8B-api/%E6%96%87%E6%9C%AC%E8%BD%AC%E8%AF%AD%E9%9F%B3
+  CustomTTS:
+    type: custom
+    method: POST
+    url: "https://open.bigmodel.cn/api/paas/v4/audio/speech"
+    headers:
+      Authorization: "Bearer <YOUR_ZHIPU_API_KEY>"
+      Content-Type: "application/json"
+    params:
+      model: "cogtts"
+      input: "{prompt_text}"
+      voice: "tongtong"
+      response_format: "wav"
+    output_dir: tmp/
+
+
+# ============================== 记忆配置 ==============================
+Memory:
+  mem_local_short:
+    type: mem_local_short
+    llm: GLM-45-Air
+
+# ============================== AUTOGLM  ==============================
+mcp_endpoint: ws://8.141.113.229/mcp/ws/?token=你的TOKEN
+
+autoglm:
+  enabled: true
+  base_url: "http://8.141.113.229/mcp/http"
+  api_key: "你的TOKEN"
+  name: autoglm_agent
+  description: AutoGLM Mobile Automation Agent
+
+
+# ============================== 意图识别配置 ==============================
+Intent:
+  nointent:
+    type: nointent
+  intent_llm:
+    type: intent_llm
+    llm: GLM-45-X
+    functions:
+      - get_weather
+      - get_news_from_newsnow
+      - play_music
+      - autoglm_control
+      - give_talk
+  # 函数调用意图识别
+  function_call:
+    type: function_call
+    functions:
+      - change_role
+      - get_weather
+      - get_news_from_newsnow
+      - play_music
+      - autoglm_control
+      - give_talk
+
+
+# ============================== 插件 ==============================
+
+plugins:
+
+  get_weather: {"api_host":"mj7p3y7naa.re.qweatherapi.com", "api_key": "a861d0d5e7bf4ee1a83d9a9e4f96d4da", "default_location": "北京" }
+
+  get_news_from_chinanews:
+    default_rss_url: "https://www.chinanews.com.cn/rss/society.xml"
+    society_rss_url: "https://www.chinanews.com.cn/rss/society.xml"
+    world_rss_url: "https://www.chinanews.com.cn/rss/world.xml"
+    finance_rss_url: "https://www.chinanews.com.cn/rss/finance.xml"
+
+  get_news_from_newsnow:
+    url: "https://newsnow.busiyi.world/api/s?id="
+    news_sources: "澎湃新闻;百度热搜;财联社"
+
+  home_assistant:
+    devices:
+      - 客厅,玩具灯,switch.cuco_cn_460494544_cp1_on_p_2_1
+      - 卧室,台灯,switch.iot_cn_831898993_socn1_on_p_2_1
+    base_url: http://homeassistant.local:8123
+    api_key: 你的home assistant api访问令牌
+
+  play_music:
+    music_dir: "./music"  # 音乐文件存放路径，将从该目录及子目录下搜索音乐文件
+    music_ext: # 音乐文件类型，p3格式效率最高
+      - ".mp3"
+      - ".wav"
+      - ".p3"
+    refresh_time: 60
+
+
+  # 非随机讲课 根据主题选择最匹配
+  play_lecture:
+    music_dir: "./music" 
+
+  give_talk:
+    music_dir: "./lecture" 
+    music_ext: 
+      - ".mp3"
+      - ".wav"
+      - ".p3"
+    refresh_time: 120

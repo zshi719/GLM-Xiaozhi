@@ -1,5 +1,13 @@
-
+import httpx
+import openai
+from openai.types import CompletionUsage
+from config.logger import setup_logging
+from core.utils.util import check_model_key
+from core.providers.llm.base import LLMProviderBase
 import os
+TAG = __name__
+logger = setup_logging()
+
 import json
 from abc import ABC, abstractmethod
 
@@ -9,42 +17,6 @@ from config.logger import setup_logging
 
 TAG = __name__
 logger = setup_logging()
-
-
-class LLMProviderBase(ABC):
-    @abstractmethod
-    def response(self, session_id, dialogue, **kwargs):
-        """LLM response generator"""
-        pass
-
-    def response_no_stream(self, system_prompt, user_prompt, **kwargs):
-        try:
-            # Construct the dialogue format
-            dialogue = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ]
-            result = ""
-            # The 'response' method is a generator, so we iterate through it
-            for part in self.response("", dialogue, **kwargs):
-                result += part
-            return result
-
-        except Exception as e:
-            logger.bind(tag=TAG).error(f"Error in non-streaming response generation: {e}")
-            return "【LLM service response exception】"
-
-    def response_with_functions(self, session_id, dialogue, functions=None):
-        """
-        Default implementation for function calling (streaming).
-        This should be overridden by providers that support function calls.
-
-        Yields: A tuple of (text_token, function_call_info)
-        """
-        # For providers that don't support functions, just return the regular response
-        # and None for the function call part.
-        for token in self.response(session_id, dialogue):
-            yield token, None
 
 
 class LLMProvider(LLMProviderBase):

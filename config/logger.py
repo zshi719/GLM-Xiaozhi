@@ -4,7 +4,9 @@ from loguru import logger
 from config.config_loader import load_config
 from config.settings import check_config_file
 from datetime import datetime
+from datetime import datetime
 
+log_filename = f"server_{datetime.now().strftime('%Y-%m-%d')}.log"
 SERVER_VERSION = "0.7.5"
 _logger_initialized = False
 
@@ -74,7 +76,7 @@ def setup_logging():
 
         log_level = log_config.get("log_level", "INFO")
         log_dir = log_config.get("log_dir", "tmp")
-        log_file = log_config.get("log_file", "server.log")
+        log_file = log_config.get("log_file", "server_{date}.log")
         data_dir = log_config.get("data_dir", "data")
 
         os.makedirs(log_dir, exist_ok=True)
@@ -86,11 +88,12 @@ def setup_logging():
         # 输出到控制台
         logger.add(sys.stdout, format=log_format, level=log_level, filter=formatter)
 
-        # 输出到文件 - 统一目录，按大小轮转
-        # 日志文件完整路径
+        # 使用当前日期格式化日志文件名
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        log_file = log_file.replace("{date}", today_str)
         log_file_path = os.path.join(log_dir, log_file)
 
-        # 添加日志处理器
+        # 输出到文件 - 统一目录，按大小轮转
         logger.add(
             log_file_path,
             format=log_format_file,
