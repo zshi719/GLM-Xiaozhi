@@ -18,7 +18,9 @@
 
 </div>
 
----
+
+
+
 
 ## 🌐 Service Endpoints / 服务接口地址
 
@@ -29,22 +31,6 @@
 | **Test Tool** | `http://101.37.205.115:8003/xiaozhi/ota/` | Service testing / 服务测试工具 |
 | **OTA Config** | `https://2662r3426b.vicp.fun/xiaozhi/ota/` | OTA configuration / OTA配置接口 |
 
----
-
-## 📌 Table of Contents / 目录
-
-- [Project Overview / 项目概述](#-project-overview--项目概述)
-- [System Architecture / 系统架构](#-system-architecture--系统架构)
-- [Core Features / 核心特性](#-core-features--核心特性)
-- [AutoGLM Integration / AutoGLM集成](#-autoglm-integration--autoglm集成)
-- [Model Selection Guide / 模型选择指南](#-model-selection-guide--模型选择指南)
-- [Performance Benchmarks / 性能测试](#-performance-benchmarks--性能测试)
-- [Quick Start / 快速入门](#-quick-start--快速入门)
-- [Configuration / 配置](#-configuration--配置)
-- [Special Features / 特色功能](#-special-features--特色功能)
-- [Development / 开发](#-development--开发)
-- [Troubleshooting / 故障排除](#-troubleshooting--故障排除)
-- [Acknowledgments / 致谢](#-acknowledgments--致谢)
 
 
 
@@ -54,7 +40,18 @@
 
 `GLM-Xiaozhi` is an open-source, self-hostable backend service that empowers developers and tech enthusiasts to take full control of their AI voice assistant. By replacing the original backend of the popular [Xiaozhi AI Voice Assistant](https://github.com/xinnan-tech/xiaozhi-esp32), this project integrates **Zhipu AI (GLM)**'s comprehensive model suite, providing a solid foundation for powerful conversational AI, real-time voice interaction, and innovative **AutoGLM** device automation capabilities.
 
-### 🌟 Core Features / 核心特性
+
+## 核心特性
+- 完全私有化: 所有服务均部署在您自己的服务器上，彻底摆脱对外部服务的依赖，确保数据隐私和安全。
+- 智谱AI全家桶: 无缝集成智谱AI的旗舰模型，包括：
+    - 语言模型: GLM-4.5系列，提供强大的对话理解和逻辑推理能力。
+    - 语音识别 (ASR): glm-asr，专为语音识别优化，准确高效。
+    - 语音合成 (TTS): cogtts 或 glm-4-voice，提供自然流畅的语音输出。
+    - 视觉模型 (VLLM): glm-4v-flash 或 glm-4.5v，赋予小智看懂世界的能力。
+    - AutoGLM 智能控制: 通过MCP协议与AutoGLM代理通信，实现对手机、电脑等设备的自动化控制，例如“帮我打开音乐App并播放周杰伦的歌”。
+- 模块化与高扩展性: 项目采用Provider模式设计，无论是更换模型还是增加新功能，都变得异常简单。
+- 轻量化部署: 无需复杂的Docker容器，直接通过源码运行，方便开发者进行调试和个性化定制。
+
 
 | Feature / 特性 | Description / 描述 |
 |---------------|-------------------|
@@ -64,9 +61,8 @@
 | **📦 Modular Architecture / 模块化架构** | Clean Provider pattern for easy model switching and feature extension / 简洁的Provider架构，便于模型切换和功能扩展 |
 | **🚀 Lightweight Deployment / 轻量化部署** | Direct source deployment without Docker complexity / 无需Docker，直接源码部署 |
 
----
 
-## 🏗️ System Architecture / 系统架构
+## System Architecture / 系统架构
 
 ### Overall Architecture / 整体架构
 
@@ -111,7 +107,7 @@ graph TB
 ### Core Workflow / 核心工作流程
 
 ```mermaid
-sequenceDiagram
+graph TB
     participant User as User/用户
     participant ESP32 as ESP32 Device
     participant Server as GLM-Xiaozhi Server
@@ -130,9 +126,8 @@ sequenceDiagram
     ESP32-->>User: Voice Output / 语音输出
 ```
 
----
 
-## 🌟 AutoGLM Integration / AutoGLM集成
+## AutoGLM Integration / AutoGLM集成
 
 **AutoGLM** transforms Xiaozhi from a conversationalist to an **actor**, leveraging Zhipu GLM's powerful **Function Calling** capabilities to execute tasks on connected devices.
 
@@ -151,6 +146,7 @@ graph TD
     G --> H[Generate Response<br/>生成响应]
     H --> I[TTS & Playback<br/>语音合成播放]
 ```
+
 
 ### Core Control File / 核心控制文件
 
@@ -181,9 +177,9 @@ async def autoglm_control(task_description: str, action: str = "start_task"):
 | **Calendar / 日程** | "查看今天的日程安排" / "Check today's schedule" |
 | **System / 系统** | "设置明天8点的闹钟" / "Set an alarm for 8 AM tomorrow" |
 
----
 
-## 📊 Model Selection Guide / 模型选择指南
+
+## Model Selection Guide / 模型选择
 
 Choose the optimal model configuration based on your requirements:
 
@@ -214,11 +210,10 @@ Choose the optimal model configuration based on your requirements:
 | **TTS** | CogTTS | Pay-per-use / 按量 | ★★★★★ | Cloud / 云端 | ★★★★★ |
 | **TTS** | EdgeTTS | Free / 免费 | ★★★☆☆ | Microsoft | ★★★☆☆ |
 
----
 
-## 📈 Performance Benchmarks / 性能测试
+## Performance Benchmarks / 性能测试
 
-*All tests conducted on 4-core 8GB cloud server / 所有测试在4核8GB云服务器上进行*
+*All tests conducted on 2-core 8GB cloud server / 所有测试在2核8GB云服务器上进行*
 
 ### LLM Performance / 语言模型性能
 
@@ -251,9 +246,9 @@ Choose the optimal model configuration based on your requirements:
 | **FunASR** | 3.058s | Local / 本地 | ⭐⭐⭐⭐ |
 | **GLMASR** | 4.374s | API / 云端 | ⭐⭐⭐ |
 
----
 
-## 🚀 Quick Start / 快速入门
+
+## Quick Start / 快速入门
 
 ### System Requirements / 系统要求
 
@@ -494,7 +489,6 @@ class CustomLLMProvider(BaseLLMProvider):
 3. **Select / 选择**: Update `selected_module` in config
 4. **Test / 测试**: Verify functionality
 
----
 
 ## Troubleshooting / 故障排除
 
@@ -527,22 +521,7 @@ ps aux | grep app.py
 
 
 
----
-
-## 💰 API Pricing Reference / API价格参考
-
-| Service / 服务 | Model / 模型 | Price / 价格 | Unit / 单位 |
-|---------------|-------------|-------------|------------|
-| **LLM** | GLM-4-Flash | ¥0.0001 | 1K tokens |
-| **LLM** | GLM-4.5-Air | ¥0.001 | 1K tokens |
-| **LLM** | GLM-4-Plus | ¥0.05 | 1K tokens |
-| **ASR** | GLM-ASR | ¥0.06 | minute / 分钟 |
-| **TTS** | CogTTS | ¥80 | 1M tokens |
-| **Vision** | GLM-4V-Flash | ¥0.002 | 1K tokens |
-
----
-
-## 🙏 Acknowledgments / 致谢
+## Acknowledgments / 致谢
 
 This project stands on the shoulders of giants. Special thanks to:
 
@@ -560,7 +539,7 @@ This project stands on the shoulders of giants. Special thanks to:
 - 🔧 [ESP32 Documentation / ESP32文档](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/)
 - 🛠️ [Hardware Tutorial / 硬件教程](https://github.com/78/xiaozhi-esp32)
 
----
+
 
 <div align="center">
 
@@ -568,8 +547,6 @@ This project stands on the shoulders of giants. Special thanks to:
 
 This project is for learning and research purposes only.  
 本项目仅供学习和研究使用。
-
----
 
 **Made with ❤️ by the Xiaozhi Community**
 
