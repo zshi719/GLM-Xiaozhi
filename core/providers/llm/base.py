@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from config.logger import setup_logging
-import os
+
 TAG = __name__
 logger = setup_logging()
 

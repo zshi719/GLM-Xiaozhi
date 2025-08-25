@@ -1,3 +1,4 @@
+from sys import modules
 from typing import Dict, Any
 from config.logger import setup_logging
 from core.utils import tts, llm, intent, memory, vad, asr
@@ -42,7 +43,7 @@ def initialize_modules(
             else config["LLM"][select_llm_module]["type"]
         )
         try: 
-            logger.bind(tag=TAG).info(f"语言大模型: GLM 4.5V")
+            logger.bind(tag=TAG).info(f"语言大模型: GLM 4.5")
         except:
             pass
 
@@ -63,7 +64,7 @@ def initialize_modules(
             else config["Intent"][select_intent_module]["type"]
         )
         try: 
-            logger.bind(tag=TAG).info(f"意图识别大模型: GLM-4.5-X")
+            logger.bind(tag=TAG).info(f"意图识别大模型: GLM-45-X")
         except:
             pass
         
@@ -82,7 +83,7 @@ def initialize_modules(
             else config["Memory"][select_memory_module]["type"]
         )
         try: 
-            logger.bind(tag=TAG).info(f"记忆大模型: GLM-4.5-Air")
+            logger.bind(tag=TAG).info(f"记忆大模型: GLM-45-Air")
         except:
             pass
         
@@ -111,11 +112,10 @@ def initialize_modules(
     if init_asr:
         select_asr_module = config["selected_module"]["ASR"]
         modules["asr"] = initialize_asr(config)
-        logger.bind(tag=TAG).info(f"语音转文本: GLM-ASR")
-        logger.bind(tag=TAG).info(f"初始化组件: asr成功 {select_asr_module}\n")
+        logger.bind(tag=TAG).info(f"初始化组件: asr成功 {select_asr_module}")
     return modules
 
-
+   
 def initialize_tts(config):
     select_tts_module = config["selected_module"]["TTS"]
     tts_type = (
@@ -130,7 +130,6 @@ def initialize_tts(config):
     )
     return new_tts
 
-
 def initialize_asr(config):
     select_asr_module = config["selected_module"]["ASR"]
     asr_type = (
@@ -138,6 +137,15 @@ def initialize_asr(config):
         if "type" not in config["ASR"][select_asr_module]
         else config["ASR"][select_asr_module]["type"]
     )
+    if asr_type == "openai":
+        logger.info("初始化ZhipuASR模块（在线服务）")
+    elif asr_type == "fun_local":
+        logger.info("初始化FunASR模块（本地模型）")
+    elif asr_type == "sherpa_onnx_local":
+        logger.info("初始化SherpaASR模块（本地模型）")
+    else:
+        logger.info(f"ASR类型: {asr_type}")
+    
     new_asr = asr.create_instance(
         asr_type,
         config["ASR"][select_asr_module],
@@ -145,6 +153,7 @@ def initialize_asr(config):
     )
     logger.bind(tag=TAG).info("ASR模块初始化完成")
     return new_asr
+
 
 
 def initialize_voiceprint(asr_instance, config):

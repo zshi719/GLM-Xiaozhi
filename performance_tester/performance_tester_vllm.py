@@ -19,8 +19,8 @@ class AsyncVisionPerformanceTester:
         self.config = load_config()
 
         self.test_images = [
-            "../../docs/images/demo1.png",
-            "../../docs/images/demo2.png",
+            "assets/demo/demo1.jpg",
+            "assets/demo/demo2.png",
         ]
         self.test_questions = [
             "这张图片里有什么？",

@@ -4,7 +4,7 @@ from config.logger import setup_logging
 from typing import Optional, Tuple, List
 from core.providers.asr.dto.dto import InterfaceType
 from core.providers.asr.base import ASRProviderBase
-import os
+
 import requests
 
 TAG = __name__

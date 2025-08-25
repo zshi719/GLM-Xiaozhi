@@ -1,3 +1,4 @@
+import logging
 import sys
 import uuid
 import signal
@@ -12,7 +13,20 @@ from core.utils.util import check_ffmpeg_installed
 
 from dotenv import load_dotenv
 import os
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("./logs/server.log"),
+        logging.StreamHandler()  # 同时输出到控制台
+    ]
+)
 
+logger = logging.getLogger(__name__)
+
+# 在关键位置添加日志
+logger.info("服务启动")
 load_dotenv()
 
 TAG = __name__

@@ -72,19 +72,31 @@ xiaozhi:
     channels: 1
     frame_duration: 60
 
+xiaoping: 
+
+zhangzong:
+
+
+
+
 # 模块测试配置
 module_test:
   test_sentences:
     - "你好，请介绍一下你自己"
     - "What's the weather like today?"
-    - "请用100字概括量子计算的基本原理和应用前景"
 
 # 唤醒词，用于识别唤醒词还是讲话内容
 wakeup_words:
   - "你好小智"
   - "嘿你好呀"
   - "你好"
-  - "嘿嘿"
+  - "小智"
+  - "张总"
+  - "小平老师"
+  - "啊"
+  - "智谱"
+  - "您好"
+
 
 # ################################以下是角色模型配置######################################
 
@@ -96,7 +108,7 @@ prompt:
     - 直来直去：有什么说什么，不绕弯子、会开玩笑但不过分，让气氛轻松
     - 催促工作：经常提醒你该干活了，别摸鱼
     - 实用主义：专注解决实际问题，不说空话
-    - 技术控：对智谱AI的各种能力了如指掌，但不装逼
+    - 技术控：对智谱AI的各种能力了如指掌，
     - 有弹吉他的隐藏特长
 
   [日常实用场景]
@@ -107,8 +119,6 @@ prompt:
   - 当你想放松时 → 陪你聊天、讲个笑话，但适时提醒"休息够了该工作了吧"
   - 当你遇到技术问题时 → 用大白话解释清楚，解决后催你赶紧继续
   - 当你制定计划时 → 帮你安排得明明白白，然后监督执行
-  - 弹吉他
-
   [智清言AutoGLM无缝协作能力]
   - 生活服务：通过AutoGLM帮你点咖啡、订餐、购物等日常琐事，解放双手
   - 旅游攻略制定：实时调用AutoGLM制定个性化旅游方案，省心省力
@@ -126,21 +136,16 @@ prompt:
 # ============================== 模块选择配置 ==============================
 selected_module:
   VAD: SileroVAD
-  ASR: SherpaASR
-  LLM: ChatGLMLLM
-  VLLM: ChatGLMVLLM
-  TTS: EdgeTTS
+  ASR: GLMASR
+  LLM: GLM-45
+  VLLM: GLM-45V
+  TTS: CogTTS
   Memory: mem_local_short
   Intent: function_call
 
 # ============================== 大语言模型配置 ==============================
 
 LLM:
-  ChatGLMLLM:
-    type: openai
-    model_name: glm-4.5-flash
-    url: https://open.bigmodel.cn/api/paas/v4/
-    api_key: 你的glm api key
 
   GLM-45:
     type: openai
@@ -171,13 +176,18 @@ LLM:
     model_name: glm-4.5-airx
     url: https://open.bigmodel.cn/api/paas/v4/
     api_key: 你的glm api key
-
-  # GLM-Z1 推理
-  GLM-Z1:
+  
+  GLM-4-Plus:
     type: openai
-    model_name: glm-z1
+    model_name: glm-4-plus 
     url: https://open.bigmodel.cn/api/paas/v4/
-    api_key: 你的 api key
+    api_key: 你的glm api key
+
+  ChatGLMLLM:
+    type: openai
+    model_name: glm-4-flash
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
 
 VLLM:
   ChatGLMVLLM:
@@ -205,6 +215,13 @@ VLLM:
     url: https://open.bigmodel.cn/api/paas/v4/
     api_key: 你的glm api key
 
+  GLM-4V-Plus:
+    type: openai
+    model_name: glm-4v-plus-0111
+    url: https://open.bigmodel.cn/api/paas/v4/
+    api_key: 你的glm api key
+
+  
 
 
 # ============================== VAD配置 ==============================
@@ -217,33 +234,56 @@ VAD:
     min_silence_duration_ms: 100
 
 # ============================== ASR配置 ==============================
-
-# ASR配置
 ASR:
+  #本地语音识别（需手动下载模型）
   FunASR:
     type: fun_local
     model_dir: models/SenseVoiceSmall
     output_dir: tmp/
-
+  
   SherpaASR:
+    # Sherpa本地语音识别, 中文语音识别模型,运行在低性能设备
     type: sherpa_onnx_local
     model_dir: models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17
     output_dir: tmp/
+    # 模型类型：sense_voice (多语言) 或 paraformer (中文专用)
+    model_type: sense_voice
 
-  ZhipuASR:
-    type: glm-asr
-    api_key: 你的glm api key
-    model_name: "glm-asr"
-    url: "https://open.bigmodel.cn/api/paas/v4/"
-    language: "zh"
+    Sherpa-ONNX-ASR:
+    # Sherpa-ONNX中文语音识别模型，可以运行在低性能设备
+    type: sherpa_onnx_local
+    model_dir: models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17
+    output_dir: tmp/
+    model_type: paraformer
+  
+  GLMASR:
+    # GLM-ASR: 专用的 ASR 模型，通过文件上传接口调用。
+    # 推荐用于大多数 ASR 场景，速度快且成本效益高。
+    type: zhipu_glm_asr
+    api_url: "https://open.bigmodel.cn/api/paas/v4/audio/transcriptions"
+    api_key: 86eb2e8ea9374667abf7c3c3aa0bb300.QALCagyJ1UnG7rKG
+    model_name: glm-asr
     output_dir: tmp/
 
-  OpenaiASR:
-    type: openai
-    api_key: 你的OpenAI API密钥
-    base_url: https://api.openai.com/v1/audio/transcriptions
-    model_name: gpt-4o-mini-transcribe
-    output_dir: tmp/
+  # Custom-GLMASR:
+  #   type: custom
+  #   method: POST
+  #   url: "https://open.bigmodel.cn/api/paas/v4/audio/transcriptions"
+  #   headers:
+  #     Authorization: "Bearer <你的 api key>"
+  #     Content-Type: "application/json"
+  #   params:
+  #     model: glm-asr
+  #     input: "{prompt_text}"
+  #   output_dir: tmp/
+
+
+  # OpenaiASR:
+  #   type: openai
+  #   api_key: 
+  #   base_url: https://api.openai.com/v1/audio/transcriptions
+  #   model_name: gpt-4o-mini-transcribe
+  #   output_dir: tmp/
 
 # ============================== TTS配置 ==============================
 TTS:
@@ -253,30 +293,18 @@ TTS:
     voice: zh-CN-YunxiNeural
     output_dir: tmp/
 
-  ZhipuTTS:
-    type: openai
-    api_key: 你的glm api key
-    model: "cogtts"
-    voice: "tongtong" 
-    url: "https://open.bigmodel.cn/api/paas/v4/"
-    response_format: "wav"
-    output_dir: tmp/
 
-
-  # 智谱语音模型
   GLM4Voice:
     type: openai
     model_name: glm-4-voice
-    url: https://open.bigmodel.cn/api/paas/v4/chat/completions
     api_key: 你的glm api key
     voice_config:
       format: "wav"
       language: "zh"
     output_dir: tmp/
 
-  # Custom: https://docs.bigmodel.cn/api-reference/%E6%A8%A1%E5%9E%8B-api/%E6%96%87%E6%9C%AC%E8%BD%AC%E8%AF%AD%E9%9F%B3
-  CustomTTS:
-    type: custom
+  CogTTS:
+    type: cogtts
     method: POST
     url: "https://open.bigmodel.cn/api/paas/v4/audio/speech"
     headers:
@@ -288,6 +316,8 @@ TTS:
       voice: "tongtong"
       response_format: "wav"
     output_dir: tmp/
+
+
 
 
 # ============================== 记忆配置 ==============================

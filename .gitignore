@@ -51,3 +51,4 @@ node_modules/
 # Git
 .git
 
+performance_results_*.md

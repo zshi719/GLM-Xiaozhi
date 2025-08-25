@@ -4,7 +4,7 @@ from openai.types import CompletionUsage
 from config.logger import setup_logging
 from core.utils.util import check_model_key
 from core.providers.llm.base import LLMProviderBase
-import os
+
 TAG = __name__
 logger = setup_logging()
 
@@ -13,9 +13,6 @@ class LLMProvider(LLMProviderBase):
     def __init__(self, config):
         self.model_name = config.get("model_name")
         self.api_key = config.get("api_key")
-        # self.base_url = config.get("base_url")
-        # self.api_key = os.getenv("API_KEY")
-        # self.base_url = os.getenv("BASE_URL")
         if "base_url" in config:
             self.base_url = config.get("base_url")
         else:
