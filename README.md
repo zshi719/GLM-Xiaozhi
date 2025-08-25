@@ -71,19 +71,10 @@ LLM 性能测试结果
 | --------- | -------- |
 | FunASR    | 3.058秒  |
 | SherpaASR | 2.867秒  |
-
-
-测试完成
-
-ASR 性能排行:
-
-| 模型名称 | 平均耗时 |
-| -------- | -------- |
-| GLMASR   | 1.374秒  |
+| GLMASR    | 4.374秒  |
 
 
 
-![alt text](image.png)
+![alt text](assets/readme_images/GLM4Voice_Call.png)
 
-
-![alt text](image-1.png)
+![alt text](assets/readme_images/GLM4Voice_Error.png)
