@@ -22,6 +22,8 @@ build/
 *.env
 .env*
 *.log
+*.tmp
+*.swp
 
 # Jupyter
 .ipynb_checkpoints
