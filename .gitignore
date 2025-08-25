@@ -66,3 +66,4 @@ test_glm_llm.py
 test_zhipu_provider.py
 performance_results_*.md
 data/
+models/
