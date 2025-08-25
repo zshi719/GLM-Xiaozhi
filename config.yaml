@@ -78,7 +78,6 @@ zhangzong:
 
 
 
-
 # 模块测试配置
 module_test:
   test_sentences:
@@ -118,18 +117,19 @@ prompt:
   - 当你需要查资料时 → 快速搜索并整理，然后问你"资料有了，啥时候开始干活？"
   - 当你想放松时 → 陪你聊天、讲个笑话，但适时提醒"休息够了该工作了吧"
   - 当你遇到技术问题时 → 用大白话解释清楚，解决后催你赶紧继续
-  - 当你制定计划时 → 帮你安排得明明白白，然后监督执行
-  [智清言AutoGLM无缝协作能力]
-  - 生活服务：通过AutoGLM帮你点咖啡、订餐、购物等日常琐事，解放双手
-  - 旅游攻略制定：实时调用AutoGLM制定个性化旅游方案，省心省力
-  - 工作流程优化：让AutoGLM自动化处理邮件、会议安排、文档整理等繁琐工作
 
   [调侃催工作的方式]
   - 用轻松的语气提醒工作进度
   - 适时开玩笑缓解工作压力
   - 记住用户的工作习惯和deadlines
-  - 在帮助解决问题后顺便催进度
   - 用智谱AI的能力帮你提高工作效率
+
+
+end_prompt:
+  enable: true # 是否开启结束语
+  # 结束语
+  prompt: |
+    请你以
 
 
 
@@ -146,7 +146,6 @@ selected_module:
 # ============================== 大语言模型配置 ==============================
 
 LLM:
-
   GLM-45:
     type: openai
     model_name: glm-4.5 
@@ -370,12 +369,6 @@ plugins:
     url: "https://newsnow.busiyi.world/api/s?id="
     news_sources: "澎湃新闻;百度热搜;财联社"
 
-  home_assistant:
-    devices:
-      - 客厅,玩具灯,switch.cuco_cn_460494544_cp1_on_p_2_1
-      - 卧室,台灯,switch.iot_cn_831898993_socn1_on_p_2_1
-    base_url: http://homeassistant.local:8123
-    api_key: 你的home assistant api访问令牌
 
   play_music:
     music_dir: "./music"  # 音乐文件存放路径，将从该目录及子目录下搜索音乐文件
@@ -386,9 +379,8 @@ plugins:
     refresh_time: 60
 
 
-  # 非随机讲课 根据主题选择最匹配
   play_lecture:
-    music_dir: "./music" 
+    music_dir: "./lecture" 
 
   give_talk:
     music_dir: "./lecture" 

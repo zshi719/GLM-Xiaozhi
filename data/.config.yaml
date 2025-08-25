@@ -27,6 +27,7 @@ exit_commands:
   - "退出"
   - "关闭"
 
+
 # 唤醒词
 wakeup_words:
   - "你好小智"
@@ -41,17 +42,15 @@ wakeup_words:
   - "小平老师"
   - "小平小平"
   - "你好吗"
-  - "凝瑞"
 
-# ============================== File Path ==============================
 
 
 # ============================== 模块选择配置 ==============================
 selected_module:
   # 语音活动检测
   VAD: SileroVAD
-  ASR: GunASR
-  LLM: GLM45
+  ASR: FunASR
+  LLM: GLM-45
   VLLM: GLM-45V
   TTS: EdgeTTS
   Memory: mem_local_short
@@ -61,7 +60,6 @@ selected_module:
 
 # 大语言模型配置
 LLM:
-
   GLM-45:
     type: openai
     model_name: glm-4.5 
@@ -104,13 +102,13 @@ VLLM:
     type: openai
     model_name: glm-4v-flash
     url: https://open.bigmodel.cn/api/paas/v4/
-    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+    api_key: 30700b69faad481297b323f915eab279.NoSgiZPhFiw87qty
 
   GLM-45V:
     type: openai
     model_name: glm-4.5v
     url: https://open.bigmodel.cn/api/paas/v4/
-    api_key: 94279aac8bb94e18baf9d387f31cccfd.aZl3SnT0KaZV0SaK
+    api_key: 30700b69faad481297b323f915eab279.NoSgiZPhFiw87qty
 
 
   GLM-41V-Thinking-Flash:
@@ -134,17 +132,11 @@ VAD:
   #------------------------------------------------
   # ASR 配置
   #-----------------------------------------------
-  FunASR:
-    type: fun_local
-    model_dir: models/SenseVoiceSmall
-    output_dir: tmp/
-
 
   FunASR:
     type: fun_local
     model_dir: models/SenseVoiceSmall
     output_dir: tmp/
-
 
   SherpaASR:
     type: sherpa_onnx_local
@@ -251,18 +243,3 @@ Intent:
       - play_music
       - autoglm_control
       - give_talk
-
-# ============================== 插件配置 ==============================
-plugins:
-  # 天气查询插件
-  get_weather: 
-    api_host: "mj7p3y7naa.re.qweatherapi.com"
-    api_key: "a861d0d5e7bf4ee1a83d9a9e4f96d4da"
-    default_location: "北京"
-
-  # 新闻查询插件
-  get_news_from_chinanews:
-    default_rss_url: "https://www.chinanews.com.cn/rss/society.xml"
-
-  get_news_from_newsnow:
-    default_rss_url: "https://www.newsnow.co.uk/"
