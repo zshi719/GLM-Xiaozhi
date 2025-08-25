@@ -1,44 +1,45 @@
 # Python
 __pycache__/
 *.py[cod]
-*.so
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual envs
+env/
+venv/
+.venv/
+
+# Byte-compiled / packaging
 *.egg
 *.egg-info/
 dist/
 build/
 .eggs/
-*.pyo
-*.pyd
-*.db
-*.sqlite3
-*.log
+
+# Runtime / settings
 *.env
 .env*
-models/
-# Performance test files
-performance_tester/test_zhipuai.py
-run_all_performance_tests.py
-test_glm_llm.py
-test_zhipu_provider.py
-performance_results_*.md
-# Jupyter Notebooks
+*.log
+
+# Jupyter
 .ipynb_checkpoints
-models/model.pt
-# VS Code
+
+# Editor
 .vscode/
-__pycache__/
-*.py[cod]
-*$py.class
-# OS
+
+# Operating system
 .DS_Store
 Thumbs.db
 
-# Data and models
+# Data, models and large artifacts
 data/*.yaml
 models/*.pt
-models/*/
+models/*/*.pt
+models/*/checkpoint
+models/model.pt
 lecture/*.wav
-music/*.mp3
 
 # Temporary files
 tmp/
@@ -55,7 +56,10 @@ node_modules/
 *.swp
 *.swo
 
-# Git
-.git
-
+# Performance test outputs
+performance_tester/test_zhipuai.py
+run_all_performance_tests.py
+test_glm_lll.py
+test_glm_llm.py
+test_zhipu_provider.py
 performance_results_*.md
