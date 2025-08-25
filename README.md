@@ -119,6 +119,7 @@ cd GLM-Xiaozhi.git
 
 ```bash
 python3 -m venv venv
+
 source venv/bin/activate
 which python
 
@@ -325,7 +326,7 @@ netstat -antp | grep python
 
 **注意**: 本项目仅供学习和研究使用。
 
-
+ 
 
 
 ### 核心功能
@@ -433,139 +434,4 @@ netstat -antp | grep python
 短期记忆：记住当前对话内容
 偏好记忆：记住用户习惯和喜好
 任务跟踪：跟进待办事项完成情况
-
-
-
-
-模块
-默认选项
-描述
-VAD
-SileroVAD
-语音活动检测
-ASR
-GLMASR
-语音识别
-LLM
-GLM-45
-大语言模型
-VLLM
-GLM-45V
-视觉大模型
-TTS
-CogTTS
-语音合成
-Memory
-mem_local_short
-记忆功能
-Intent
-function_call
-意图识别
-
-服务模块列表
-下表列出了所有已集成的服务模块及其类型。
-模块名称
-免费方案
-付费方案
-ASR (语音识别)
-FunASR (本地), SherpaASR (本地)
-GLMASR (智谱API)
-LLM (大语言模型)
-智谱 glm-4-flash, glm-4.5-flash
-智谱 glm-4, glm-4.5 系列
-VLLM (视觉大模型)
-智谱 glm-4v-flash
-智谱 glm-4.5-v 系列
-TTS (语音合成)
-EdgeTTS
-CogTTS, GLM4Voice (智谱API)
-Intent (意图识别)
-function_call (函数调用)
-function_call (函数调用)
-Memory (记忆功能)
-mem_local_short (本地短期记忆）
-mem_local_short (本地短期记忆）
-
-插件系统 (plugins)
-框架支持通过插件扩展功能，例如：
-get_weather: 获取天气信息。
-get_news_from_newsnow: 从新闻源获取最新消息。
-home_assistant: 与Home Assistant集成，控制智能家居设备。
-play_music: 播放本地音乐文件。
-give_talk: 播放本地讲座录音。
-📊 性能基准测试
-我们提供了一套完整的性能测试工具，以帮助您评估不同模型的表现。
-ASR (语音识别) 性能
-模型名称
-平均耗时
-FunASR
-3.058秒
-SherpaASR
-2.867秒
-GLMASR
-4.374秒
-
-LLM (大语言模型) 性能
-模型名称
-平均响应时间(s)
-首Token时间(s)
-成功率
-状态
-GLM-4-Plus
-2.134
-0.585
-3/3
-正常
-ChatGLMLLM
-2.035
-0.739
-3/3
-正常
-GLM-4.5-AirX
-1.682
-1.297
-3/3
-正常
-GLM-4.5-Air
-1.856
-1.394
-3/3
-正常
-GLM-4
-2.679
-1.566
-3/3
-正常
-GLM-4.5
-2.917
-2.374
-3/3
-正常
-GLM-4.5-X
-2.544
-2.636
-3/3
-正常
-GLM-4.5-Flash
-5.418
-4.404
-2/3
-正常
-
-VLLM (视觉大模型) 性能
-模型名称
-响应耗时
-稳定性
-ChatGLMVLLM
-3.221秒
-0.483
-GLM-4.5V
-6.923秒
-0.343
-GLM-4.1V-Thinking-Flash
-6.820秒
-0.523
-
-
-
 
