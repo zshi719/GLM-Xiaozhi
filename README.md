@@ -24,7 +24,7 @@
 
 `GLM-Xiaozhi` 是一个开源、可自托管的后端服务，旨在让开发者和技术爱好者能够完全掌控自己的AI语音助手。通过替换广受欢迎的[小智AI语音助手](https://github.com/xinnan-tech/xiaozhi-esp32)的原版后端，本项目集成了**智谱AI（GLM）** 的全套模型服务，为强大的对话式AI、实时语音交互以及创新的**AutoGLM**设备自动化代理功能提供了坚实的基础。
 
-`GLM-Xiaozhi` is an open-source, self-hostable backend service that empowers developers and tech enthusiasts to take full control of their AI voice assistant. By replacing the original backend of the popular [Xiaozhi AI Voice Assistant](https://github.com/xinnan-tech/xiaozhi-esp32), this project integrates **Zhipu AI (GLM)**'s comprehensive model suite, providing a solid foundation for powerful conversational AI, real-time voice interaction, and innovative **AutoGLM** device automation capabilities.
+`GLM-Xiaozhi` is an open-source, self-hostable backend service that allows developers and tech enthusiasts to take full control of their AI voice assistant. By reconstructing the original backend of the popular [Xiaozhi AI Voice Assistant](https://github.com/xinnan-tech/xiaozhi-esp32), this project integrates [**Zhipu AI (GLM)**'s](https://bigmodel.cn/) large-language models that provide a solid foundation for powerful conversational AI, real-time voice interaction, and innovative **AutoGLM** device automation capabilities.
 
 
 ## 核心特性
