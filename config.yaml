@@ -265,25 +265,17 @@ ASR:
     model_name: glm-asr
     output_dir: tmp/
 
-  # Custom-GLMASR:
-  #   type: custom
-  #   method: POST
-  #   url: "https://open.bigmodel.cn/api/paas/v4/audio/transcriptions"
-  #   headers:
-  #     Authorization: "Bearer <你的 api key>"
-  #     Content-Type: "application/json"
-  #   params:
-  #     model: glm-asr
-  #     input: "{prompt_text}"
-  #   output_dir: tmp/
-
-
-  # OpenaiASR:
-  #   type: openai
-  #   api_key: 
-  #   base_url: https://api.openai.com/v1/audio/transcriptions
-  #   model_name: gpt-4o-mini-transcribe
-  #   output_dir: tmp/
+  Custom-GLMASR:
+    type: custom
+    method: POST
+    url: "https://open.bigmodel.cn/api/paas/v4/audio/transcriptions"
+    headers:
+      Authorization: "Bearer <你的 api key>"
+      Content-Type: "application/json"
+    params:
+      model: glm-asr
+      input: "{prompt_text}"
+    output_dir: tmp/
 
 # ============================== TTS配置 ==============================
 TTS:

@@ -15,13 +15,20 @@ build/
 *.env
 .env*
 models/
-
+# Performance test files
+performance_tester/test_zhipuai.py
+run_all_performance_tests.py
+test_glm_llm.py
+test_zhipu_provider.py
+performance_results_*.md
 # Jupyter Notebooks
 .ipynb_checkpoints
 models/model.pt
 # VS Code
 .vscode/
-
+__pycache__/
+*.py[cod]
+*$py.class
 # OS
 .DS_Store
 Thumbs.db
