@@ -20,21 +20,7 @@
 
 
 
-
-
-## 🌐 Service Endpoints / 服务接口地址
-
-| Service / 服务 | URL | Description / 描述 |
-|---------------|-----|-------------------|
-| **WebSocket** | `ws://101.37.205.115:8000/xiaozhi/v1/` | Real-time audio streaming / 实时音频流 |
-| **Vision API** | `http://101.37.205.115:8003/mcp/vision/explain` | Image analysis / 图像分析接口 |
-| **Test Tool** | `http://101.37.205.115:8003/xiaozhi/ota/` | Service testing / 服务测试工具 |
-| **OTA Config** | `https://2662r3426b.vicp.fun/xiaozhi/ota/` | OTA configuration / OTA配置接口 |
-
-
-
-
-## 📋 Project Overview / 项目概述
+## Project Overview / 概述
 
 `GLM-Xiaozhi` 是一个开源、可自托管的后端服务，旨在让开发者和技术爱好者能够完全掌控自己的AI语音助手。通过替换广受欢迎的[小智AI语音助手](https://github.com/xinnan-tech/xiaozhi-esp32)的原版后端，本项目集成了**智谱AI（GLM）** 的全套模型服务，为强大的对话式AI、实时语音交互以及创新的**AutoGLM**设备自动化代理功能提供了坚实的基础。
 
@@ -347,6 +333,18 @@ selected_module:
   vllm: "ChatGLMVLLM" # Vision provider / 视觉模型
 
 ```
+
+
+
+
+### Example Service Endpoints / 服务接口地址*
+
+| Service / 服务 | URL | Description / 描述 |
+|---------------|-----|-------------------|
+| **WebSocket** | `ws://101.37.205.115:8000/xiaozhi/v1/` | Real-time audio streaming / 实时音频流 |
+| **Vision API** | `http://101.37.205.115:8003/mcp/vision/explain` | Image analysis / 图像分析接口 |
+| **Test Tool** | `http://101.37.205.115:8003/xiaozhi/ota/` | Service testing / 服务测试工具 |
+| **OTA Config** | `https://2662r3426b.vicp.fun/xiaozhi/ota/` | OTA configuration / OTA配置接口 |
 
 
 #### 5️⃣ Start the app
